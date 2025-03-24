@@ -1,6 +1,10 @@
 # 依赖目录
 node_modules/
 
+# Output directories
+output/
+uploads/
+
 # 日志文件
 npm-debug.log*
 yarn-debug.log*
