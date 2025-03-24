@@ -1,4 +1,5 @@
 import Voice2Phoneme from '../src/index.js';
+import { formatDetailedOutput, formatVisemeOutput } from '../src/utils/format.js';
 import fs from 'fs';
 import path from 'path';
 
@@ -17,30 +18,21 @@ async function example() {
         const phonemes = await converter.convertFile(inputFile);
 
         // 准备详细输出数据
-        const outputData = {
+        const outputData = formatDetailedOutput({
             audioFile: path.basename(inputFile),
             sampleRate: converter.options.sampleRate,
             frameSize: converter.options.frameSize,
-            phonemes: phonemes.map(p => ({
-                ...p,
-                start: Number(p.start.toFixed(3)),
-                end: Number(p.end.toFixed(3)),
-                chinese: converter.phonemeRecognizer.phonemeMap[p.phoneme]
-            }))
-        };
+            phonemes,
+            phonemeMap: converter.phonemeRecognizer.phonemeMap
+        });
 
         // 准备简化版输出数据（用于数字人口型）
-        const visemeData = {
+        const visemeData = formatVisemeOutput({
             audioFile: path.basename(inputFile),
-            duration: phonemes.length > 0 ?
-                Number(phonemes[phonemes.length - 1].end.toFixed(3)) : 0,
-            frameRate: Number((1 / (converter.options.frameSize / converter.options.sampleRate)).toFixed(3)),
-            visemes: phonemes.map(p => ({
-                viseme: p.viseme,
-                start: Number(p.start.toFixed(3)),
-                end: Number(p.end.toFixed(3))
-            }))
-        };
+            phonemes,
+            frameSize: converter.options.frameSize,
+            sampleRate: converter.options.sampleRate
+        });
 
         // 生成输出文件路径
         const outputFile = path.join(
