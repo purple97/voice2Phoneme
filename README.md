@@ -61,6 +61,15 @@ voice2phoneme/
 ├── test/              # 测试文件
 ├── examples/          # 示例代码
 └── docs/              # 文档
+├── demo/
+  ├── package.json         # 项目依赖配置
+  ├── vite.config.js      # Vite 配置文件
+  ├── index.html          # HTML 模板
+  └── src/
+      ├── main.jsx        # 应用入口
+      ├── App.jsx         # 主应用组件
+      └── components/
+          └── AudioUploader.jsx  # 音频上传组件
 ```
 
 ## API 文档
