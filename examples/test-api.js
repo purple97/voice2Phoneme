@@ -36,9 +36,9 @@ async function testRecognize() {
             console.log('检测到的音素数量:', result.data.result.phonemes.length);
 
             // 打印前 5 个音素作为示例
-            console.log('\n前 5 个音素:');
+            console.log('\n前 5 个口型:');
             result.data.result.phonemes.slice(0, 5).forEach(p => {
-                console.log(`${p.phoneme} (${p.start}s - ${p.end}s) 口型: ${p.viseme}`);
+                console.log(`口型: ${p.viseme} (${p.start}s - ${p.end}s)`);
             });
         } else {
             console.log('❌ 音素识别失败:', result.error);

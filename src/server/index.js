@@ -5,6 +5,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import { createPhonemeRouter } from './routes/phoneme.js';
+// import bodyParser from 'koa-bodyparser';
+import router from './routes/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -57,6 +59,13 @@ app.use(async (ctx, next) => {
 // 使用音素识别路由
 const phonemeRouter = createPhonemeRouter({ uploadDir: UPLOAD_DIR, outputDir: OUTPUT_DIR });
 app.use(phonemeRouter.routes()).use(phonemeRouter.allowedMethods());
+
+// 使用中间件
+// app.use(bodyParser());
+
+// 使用路由
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 // 错误处理
 app.on('error', (err, ctx) => {
